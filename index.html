@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Attribute Toggle Test</title>
+  <style>
+    body { font-family: Arial; padding: 20px; }
+    .box { margin: 20px 0; }
+    button { padding: 10px 16px; margin-top: 10px; }
+    label { display: block; margin: 5px 0; }
+  </style>
+</head>
+<body>
+
+<h2>🔧 Attribute Toggle Playground</h2>
+
+<div class="box">
+  <h3>Toggle Attributes</h3>
+
+  <label><input type="checkbox" checked onchange="toggleAttr('data-testid', 'login-btn')"> data-testid</label>
+  <label><input type="checkbox" checked onchange="toggleAttr('id', 'login-btn')"> id</label>
+  <label><input type="checkbox" checked onchange="toggleAttr('class', 'btn primary')"> class</label>
+  <label><input type="checkbox" checked onchange="toggleAttr('name', 'login')"> name</label>
+
+</div>
+
+<div class="box">
+  <h3>Test Element</h3>
+
+  <button id="login-btn"
+          data-testid="login-btn"
+          class="btn primary"
+          name="login">
+    Login Button
+  </button>
+
+</div>
+
+<script>
+  const element = document.querySelector("button");
+
+  function toggleAttr(attr, value) {
+    if (element.hasAttribute(attr)) {
+      element.removeAttribute(attr);
+      console.log(`❌ Removed ${attr}`);
+    } else {
+      element.setAttribute(attr, value);
+      console.log(`✅ Added ${attr}`);
+    }
+  }
+</script>
+
+</body>
+</html>
