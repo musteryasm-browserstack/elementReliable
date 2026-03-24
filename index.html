@@ -2,90 +2,53 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Locator Test - V1 Enhanced</title>
-  <style>
-    body { font-family: Arial; padding: 20px; }
-    button { margin: 5px; padding: 8px 12px; }
-    .box { margin-top: 20px; }
-    pre { background: #f4f4f4; padding: 10px; }
-  </style>
+  <title>Page 1 - Locator Test</title>
 </head>
 <body>
 
-<h2>🟢 Page 1 (Main)</h2>
+<h2>🟢 Page 1</h2>
 
-<button onclick="showPage('page1')">Go to Page 1</button>
-<button onclick="showPage('page2')">Go to Page 2</button>
+<a href="page2.html">Go to Page 2</a>
 
-<div id="page1" class="box">
-  <h3>Login (Page 1)</h3>
-
-  <div id="container">
-    <button id="login-btn"
-            data-testid="login-btn"
-            class="btn primary"
-            name="login">
-      Login
-    </button>
-  </div>
-
-  <button onclick="printXPath('login-btn')">Print XPath</button>
+<div id="container">
+  <button id="login-btn"
+          data-testid="login-btn"
+          class="btn primary"
+          name="login">
+    Login (Page 1)
+  </button>
 </div>
 
-<div id="page2" class="box" style="display:none;">
-  <h3>Login (Page 2)</h3>
+<br>
+<button onclick="printXPath('login-btn')">Print XPath</button>
 
-  <div id="container-2">
-    <button id="login-btn-2"
-            data-testid="login-btn"
-            class="btn secondary"
-            name="login">
-      Login (Page 2)
-    </button>
-  </div>
-
-  <button onclick="printXPath('login-btn-2')">Print XPath</button>
-</div>
-
-<h3>🔍 Output</h3>
 <pre id="output"></pre>
 
 <script>
-  function showPage(pageId) {
-    document.getElementById("page1").style.display = "none";
-    document.getElementById("page2").style.display = "none";
-    document.getElementById(pageId).style.display = "block";
-  }
+function getXPath(el) {
+  if (el === document.body) return '/html/body';
 
-  function getXPath(element) {
-    if (element.id !== '')
-      return '//*[@id="' + element.id + '"]';
+  let ix = 0;
+  const siblings = el.parentNode.childNodes;
 
-    if (element === document.body)
-      return '/html/body';
+  for (let i = 0; i < siblings.length; i++) {
+    const sib = siblings[i];
 
-    let ix = 0;
-    const siblings = element.parentNode.childNodes;
+    if (sib === el) {
+      return getXPath(el.parentNode) + '/' + el.tagName.toLowerCase() + '[' + (ix + 1) + ']';
+    }
 
-    for (let i = 0; i < siblings.length; i++) {
-      const sibling = siblings[i];
-
-      if (sibling === element)
-        return getXPath(element.parentNode) + '/' + element.tagName.toLowerCase() + '[' + (ix + 1) + ']';
-
-      if (sibling.nodeType === 1 && sibling.tagName === element.tagName)
-        ix++;
+    if (sib.nodeType === 1 && sib.tagName === el.tagName) {
+      ix++;
     }
   }
+}
 
-  function printXPath(id) {
-    const el = document.getElementById(id);
-    const xpath = getXPath(el);
-    const html = el.outerHTML;
-
-    document.getElementById("output").textContent =
-      "XPath:\n" + xpath + "\n\nDOM:\n" + html;
-  }
+function printXPath(id) {
+  const el = document.getElementById(id);
+  document.getElementById("output").textContent =
+    "XPath:\n" + getXPath(el) + "\n\nDOM:\n" + el.outerHTML;
+}
 </script>
 
 </body>
