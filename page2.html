@@ -1,0 +1,60 @@
+```html
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Page 2 - Locator Test</title>
+</head>
+<body>
+
+<h2>🔵 Page 2</h2>
+
+<a href="index.html">Go to Page 1</a>
+
+<div id="wrapper">
+  <div class="inner">
+    <div>
+      <button id="login-btn"
+              data-testid="login-btn"
+              class="btn secondary"
+              name="login">
+        Login (Page 2)
+      </button>
+    </div>
+  </div>
+</div>
+
+<br>
+<button onclick="printXPath('login-btn')">Print XPath</button>
+
+<pre id="output"></pre>
+
+<script>
+function getXPath(el) {
+  if (el === document.body) return '/html/body';
+
+  let ix = 0;
+  const siblings = el.parentNode.childNodes;
+
+  for (let i = 0; i < siblings.length; i++) {
+    const sib = siblings[i];
+
+    if (sib === el) {
+      return getXPath(el.parentNode) + '/' + el.tagName.toLowerCase() + '[' + (ix + 1) + ']';
+    }
+
+    if (sib.nodeType === 1 && sib.tagName === el.tagName) {
+      ix++;
+    }
+  }
+}
+
+function printXPath(id) {
+  const el = document.getElementById(id);
+  document.getElementById("output").textContent =
+    "XPath:\n" + getXPath(el) + "\n\nDOM:\n" + el.outerHTML;
+}
+</script>
+
+</body>
+</html>
+```
