@@ -2,21 +2,27 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Page 1 - Locator Test</title>
+  <title>Page 1 - V2 (XPath Broken)</title>
 </head>
 <body>
 
-<h2>🟢 Page 1</h2>
+<h2>🟥 Page 1 (V2 - Broken XPath)</h2>
 
 <a href="page2.html">Go to Page 2</a>
 
 <div id="container">
-  <button id="login-btn"
-          data-testid="login-btn"
-          class="btn primary"
-          name="login">
-    Login (Page 1)
-  </button>
+  <section class="outer">
+    <div class="mid">
+      <div class="inner">
+        <button id="login-btn"
+                data-testid="login-btn"
+                class="btn primary"
+                name="login">
+          Login (Page 1)
+        </button>
+      </div>
+    </div>
+  </section>
 </div>
 
 <br>
