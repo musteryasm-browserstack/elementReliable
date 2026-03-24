@@ -2,114 +2,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Locator Reliability Playground</title>
-  <style>
-    body { font-family: Arial; padding: 20px; }
-    .box { margin: 20px 0; padding: 15px; border: 1px solid #ccc; }
-    button { padding: 10px 16px; margin: 5px; }
-    label { display: block; margin: 5px 0; }
-    .highlight { border: 2px dashed red; padding: 10px; }
-  </style>
+  <title>Locator Test - Version 1</title>
 </head>
 <body>
 
-<h2>🧪 Locator Reliability Playground</h2>
-
-<!-- CONTROLS -->
-<div class="box">
-  <h3>🔧 Attribute Toggles</h3>
-
-  <label><input type="checkbox" checked onchange="toggleAttr('data-testid','login-btn')"> data-testid</label>
-  <label><input type="checkbox" checked onchange="toggleAttr('id','login-btn')"> id</label>
-  <label><input type="checkbox" checked onchange="toggleAttr('class','btn primary dynamic-123')"> class</label>
-  <label><input type="checkbox" checked onchange="toggleAttr('name','login')"> name</label>
-
-</div>
-
-<!-- DOM CONTROLS -->
-<div class="box">
-  <h3>💥 DOM Controls (Break XPath)</h3>
-
-  <button onclick="breakDOM()">Break XPath / CSS</button>
-  <button onclick="resetDOM()">Reset DOM</button>
-</div>
-
-<!-- TEST AREA -->
-<div class="box">
-  <h3>🎯 Test Element</h3>
+  <h2>Login Page (V1 - Stable)</h2>
 
   <div id="container">
-    <button id="login-btn"
-            data-testid="login-btn"
-            class="btn primary dynamic-123"
-            name="login">
-      Login Button
+    <button id="login-btn" data-testid="login-btn">
+      Login
     </button>
   </div>
-
-</div>
-
-<!-- VARIANTS -->
-<div class="box">
-  <h3>🧩 Static Variants (for comparison)</h3>
-
-  <button data-testid="only-testid">data-testid only</button>
-  <button id="only-id">id only</button>
-  <button class="random-456">class only</button>
-  <button name="only-name">name only</button>
-  <button data-testid="combo" id="combo-id">data-testid + id</button>
-</div>
-
-<!-- DEBUG -->
-<div class="box">
-  <h3>🔍 Debug</h3>
-  <button onclick="logElement()">Log Current Element HTML</button>
-  <pre id="output"></pre>
-</div>
-
-<script>
-  let originalHTML = document.getElementById("container").innerHTML;
-
-  function getElement() {
-    return document.querySelector("#container button");
-  }
-
-  function toggleAttr(attr, value) {
-    const el = getElement();
-
-    if (el.hasAttribute(attr)) {
-      el.removeAttribute(attr);
-      console.log(`❌ Removed ${attr}`);
-    } else {
-      el.setAttribute(attr, value);
-      console.log(`✅ Added ${attr}`);
-    }
-  }
-
-  function breakDOM() {
-    const container = document.getElementById("container");
-    const btn = getElement();
-
-    const wrapper = document.createElement("div");
-    wrapper.className = "highlight";
-    wrapper.id = "new-wrapper-" + Math.floor(Math.random() * 1000);
-
-    container.appendChild(wrapper);
-    wrapper.appendChild(btn);
-
-    console.log("💥 DOM structure changed → XPath likely broken");
-  }
-
-  function resetDOM() {
-    document.getElementById("container").innerHTML = originalHTML;
-    console.log("🔄 DOM reset");
-  }
-
-  function logElement() {
-    const el = getElement();
-    document.getElementById("output").textContent = el.outerHTML;
-  }
-</script>
 
 </body>
 </html>
