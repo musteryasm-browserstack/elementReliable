@@ -2,60 +2,17 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Page 1 - V2 (XPath Broken)</title>
+  <title>Locator Test - Version 1</title>
 </head>
 <body>
 
-<h2>🟥 Page 1 (V2 - Broken XPath)</h2>
+  <h2>Login Page (V1 - Stable)</h2>
 
-<a href="page2.html">Go to Page 2</a>
-
-<div id="container">
-  <section class="outer">
-    <div class="mid">
-      <div class="inner">
-        <button id="login-btn"
-                data-testid="login-btn"
-                class="btn primary"
-                name="login">
-          Login (Page 1)
-        </button>
-      </div>
-    </div>
-  </section>
-</div>
-
-<br>
-<button onclick="printXPath('login-btn')">Print XPath</button>
-
-<pre id="output"></pre>
-
-<script>
-function getXPath(el) {
-  if (el === document.body) return '/html/body';
-
-  let ix = 0;
-  const siblings = el.parentNode.childNodes;
-
-  for (let i = 0; i < siblings.length; i++) {
-    const sib = siblings[i];
-
-    if (sib === el) {
-      return getXPath(el.parentNode) + '/' + el.tagName.toLowerCase() + '[' + (ix + 1) + ']';
-    }
-
-    if (sib.nodeType === 1 && sib.tagName === el.tagName) {
-      ix++;
-    }
-  }
-}
-
-function printXPath(id) {
-  const el = document.getElementById(id);
-  document.getElementById("output").textContent =
-    "XPath:\n" + getXPath(el) + "\n\nDOM:\n" + el.outerHTML;
-}
-</script>
+  <div id="container">
+    <button id="login-btn" data-testid="login-btn">
+      Login
+    </button>
+  </div>
 
 </body>
 </html>
